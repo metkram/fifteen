@@ -1,7 +1,14 @@
+import java.util.Arrays;
 public class Fifteen {
 	public static void main(String arg[])
 	throws java.io.IOException {
 		int matrix[][] = { //Matrix where all squares on their places
+			{1, 2, 3, 4},
+			{5, 6, 7, 8},
+			{9, 10, 11, 12},
+			{13, 14, 15, 0}
+		};
+		int intricateMatrix[][] = { //Matrix where all squares on their places
 			{1, 2, 3, 4},
 			{5, 6, 7, 8},
 			{9, 10, 11, 12},
@@ -25,5 +32,12 @@ public class Fifteen {
 			}
 			System.out.println();
 		}
+		for(int i = 0; i < intricateMatrix.length; i++) {
+			for(int n = 0; n < intricateMatrix[i].length; n++) {
+				System.out.print(((intricateMatrix[i][n] < 10) ? "0" : "") + intricateMatrix[i][n] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println("Is pazzle solved? " + Arrays.deepEquals(matrix, intricateMatrix));
 	}
 }
