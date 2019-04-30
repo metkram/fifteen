@@ -1,14 +1,40 @@
 import java.util.Arrays;
 public class Fifteen {
-	static int[] findZero(int[][] m) {
+	//Method gets intricateMatrix and return position of number's place
+	static int[] findNumber(int[][] m, int num) {
 		int[] result = new int[2];
 		for(int i = 0; i < m.length; i++) {
 			for(int n = 0; n < m[i].length; n++) {
-				if (m[i][n] == 0) {
+				if (m[i][n] == num) {
 				result[1] = n;
 				result[0] = i;
 				}
 			}
+		}
+		return result;
+	}
+	//Method gets intricateMatrix and return possible steps in order top, right, bottom, left. -1 is impossible direction
+	static int[] possibleSteps(int[][] intrMatrix, int[] zeroPosition) {
+		int result[] = new int[4];
+		if (zeroPosition[0] == 0) {
+			result[0] = -1;
+		} else {
+			result[0] = intrMatrix[zeroPosition[0] - 1][zeroPosition[1]];
+		}
+		if (zeroPosition[1] == 3) {
+			result[1] = -1;
+		} else {
+			result[1] = intrMatrix[zeroPosition[0]][zeroPosition[1] + 1];
+		}
+		if (zeroPosition[0] == 3) {
+			result[2] = -1;
+		} else {
+			result[2] = intrMatrix[zeroPosition[0] + 1][zeroPosition[1]];
+		}
+		if (zeroPosition[1] == 0) {
+			result[3] = -1;
+		} else {
+			result[3] = intrMatrix[zeroPosition[0]][zeroPosition[1] - 1];
 		}
 		return result;
 	}
@@ -27,15 +53,10 @@ public class Fifteen {
 			{9, 10, 11, 0},
 			{13, 14, 15, 12}
 		};
-		int zero[] = findZero(intricateMatrix); //Position of empty square (1/16)
+		int zero[] = findNumber(intricateMatrix, 0); //Position of empty square (1/16)
+		int positions[] = possibleSteps(intricateMatrix, zero);
 
 		System.out.println("Zero point at " + (zero[0] + 1) + " line and " + (zero[1] + 1) + " column");
-		for(int i = 0; i < matrix.length; i++) {
-			for(int n = 0; n < matrix[i].length; n++) {
-				System.out.print(((matrix[i][n] < 10) ? "0" : "") + matrix[i][n] + " ");
-			}
-			System.out.println();
-		}
 		for(int i = 0; i < intricateMatrix.length; i++) {
 			for(int n = 0; n < intricateMatrix[i].length; n++) {
 				System.out.print(((intricateMatrix[i][n] < 10) ? "0" : "") + intricateMatrix[i][n] + " ");
@@ -43,5 +64,6 @@ public class Fifteen {
 			System.out.println();
 		}
 		System.out.println("Is pazzle solved? " + Arrays.deepEquals(matrix, intricateMatrix));
+		System.out.println("Possible step is " + positions[0] + " " + positions[1] + " " + positions[2] + " " + positions[3]);
 	}
 }
