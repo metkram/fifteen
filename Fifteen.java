@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 public class Fifteen {
 	//Method gets intricateMatrix and return position of number's place
 	static int[] findNumber(int[][] m, int num) {
@@ -39,6 +40,27 @@ public class Fifteen {
 		return result;
 	}
 
+	static void game(int[] pos)
+	throws java.io.IOException {
+		int number;
+		Scanner in = new Scanner(System.in);
+		do {
+			System.out.print("Enter number you'd like to move ");
+			while(!in.hasNextInt()) {
+				System.out.print("it's not a number, enter ");
+				for(int i = 0; i < pos.length; i++) {
+					if (pos[i] >= 0)
+						System.out.print(pos[i] + " ");
+				}
+				in.next();
+			}
+			System.out.println();
+		} while(!in.hasNextInt()); //here I'll should add numbers from possible steps
+		number = in.nextInt();
+		System.out.println("Number is " + number);
+		in.close();
+	}
+
 	public static void main(String arg[])
 	throws java.io.IOException {
 		int matrix[][] = { //Matrix where all squares on their places
@@ -55,6 +77,9 @@ public class Fifteen {
 		};
 		int zero[] = findNumber(intricateMatrix, 0); //Position of empty square (1/16)
 		int positions[] = possibleSteps(intricateMatrix, zero);
+
+
+		game(positions);
 
 		System.out.println("Zero point at " + (zero[0] + 1) + " line and " + (zero[1] + 1) + " column");
 		for(int i = 0; i < intricateMatrix.length; i++) {
