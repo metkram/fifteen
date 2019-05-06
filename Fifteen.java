@@ -40,36 +40,53 @@ public class Fifteen {
 		return result;
 	}
 
-	static void game(int[] pos)
+	static void printMatrix(int[][] matrix) {
+		for(int i = 0; i < matrix.length; i++) {
+			for(int n = 0; n < matrix[i].length; n++) {
+				System.out.print(((matrix[i][n] < 10) ? "0" : "") + matrix[i][n] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+	static void game(int[] pos, int[][] solvedmatrix, int[][] unsolvedmatrix)
 	throws java.io.IOException {
 		int number;
 		boolean include = false;
+		int[][] solved = solvedmatrix, unsolved = unsolvedmatrix;
+		int[] zero, chosenNumber;
 		Scanner in = new Scanner(System.in);
-		do {
+		while(!Arrays.deepEquals(solved, unsolved)) {
 			do {
-				System.out.print("Enter number you'd like to move ");
-				while(!in.hasNextInt()) {
-					System.out.print("it's not a number, enter ");
-					for(int i = 0; i < pos.length; i++) {
-						if (pos[i] >= 0)
-							System.out.print(pos[i] + " ");
+				do {
+					printMatrix(unsolved);
+					System.out.print("Enter number you'd like to move ");
+					while(!in.hasNextInt()) {
+						System.out.print("it's not a number, enter ");
+						for(int i = 0; i < pos.length; i++) {
+							if (pos[i] >= 0)
+								System.out.print(pos[i] + " ");
+						}
+						in.next();
 					}
-					in.next();
+					System.out.println();
+				} while(!in.hasNextInt()); //here I'll should add numbers from possible steps
+				number = in.nextInt();
+				for(int i = 0; i < pos.length; i++) {
+					if (number == pos[i] && number > 0) {
+						include = true;
+						break;
+					}
 				}
-				System.out.println();
-			} while(!in.hasNextInt()); //here I'll should add numbers from possible steps
-			number = in.nextInt();
-			for(int i = 0; i < pos.length; i++) {
-				if (number == pos[i] && number > 0) {
-					include = true;
-					break;
-				}
-			}
-		} while(!include);
-
-
-		System.out.println("Number is " + number);
+			} while(!include);
+			System.out.println("Chosen number is " + number);
+			zero = findNumber(unsolved, 0);
+			chosenNumber = findNumber(unsolved, number);
+			unsolved[zero[0]][zero[1]] = number;
+			unsolved[chosenNumber[0]][chosenNumber[1]] = 0;
+		}
 		in.close();
+		System.out.println("Yo, yo, yo, you have won this game");
 	}
 
 	public static void main(String arg[])
@@ -89,17 +106,6 @@ public class Fifteen {
 		int zero[] = findNumber(intricateMatrix, 0); //Position of empty square (1/16)
 		int positions[] = possibleSteps(intricateMatrix, zero);
 
-
-		game(positions);
-
-		System.out.println("Zero point at " + (zero[0] + 1) + " line and " + (zero[1] + 1) + " column");
-		for(int i = 0; i < intricateMatrix.length; i++) {
-			for(int n = 0; n < intricateMatrix[i].length; n++) {
-				System.out.print(((intricateMatrix[i][n] < 10) ? "0" : "") + intricateMatrix[i][n] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println("Is pazzle solved? " + Arrays.deepEquals(matrix, intricateMatrix));
-		System.out.println("Possible step is " + positions[0] + " " + positions[1] + " " + positions[2] + " " + positions[3]);
+		game(positions, matrix, intricateMatrix);
 	}
 }
