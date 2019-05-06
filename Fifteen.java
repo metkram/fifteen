@@ -43,20 +43,31 @@ public class Fifteen {
 	static void game(int[] pos)
 	throws java.io.IOException {
 		int number;
+		boolean include = false;
 		Scanner in = new Scanner(System.in);
 		do {
-			System.out.print("Enter number you'd like to move ");
-			while(!in.hasNextInt()) {
-				System.out.print("it's not a number, enter ");
-				for(int i = 0; i < pos.length; i++) {
-					if (pos[i] >= 0)
-						System.out.print(pos[i] + " ");
+			do {
+				System.out.print("Enter number you'd like to move ");
+				while(!in.hasNextInt()) {
+					System.out.print("it's not a number, enter ");
+					for(int i = 0; i < pos.length; i++) {
+						if (pos[i] >= 0)
+							System.out.print(pos[i] + " ");
+					}
+					in.next();
 				}
-				in.next();
+				System.out.println();
+			} while(!in.hasNextInt()); //here I'll should add numbers from possible steps
+			number = in.nextInt();
+			for(int i = 0; i < pos.length; i++) {
+				if (number == pos[i] && number > 0) {
+					include = true;
+					break;
+				}
 			}
-			System.out.println();
-		} while(!in.hasNextInt()); //here I'll should add numbers from possible steps
-		number = in.nextInt();
+		} while(!include);
+
+
 		System.out.println("Number is " + number);
 		in.close();
 	}
