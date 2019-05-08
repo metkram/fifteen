@@ -49,6 +49,47 @@ public class Fifteen {
 		}
 	}
 
+	static int[][] generateMatrix() {
+		int matrix[] = new int[15];
+		int intrMatrix[][] = new int[4][4];
+		int temp = 0, paritySum;
+		boolean parity = false;
+		for(int i = 0; i < matrix.length; i++) {
+			matrix[i] = i + 1;
+		}
+		while(!parity) {
+			paritySum = 0;
+			parity = false;
+			for(int i = 0; i < matrix.length; i++) {
+				int random = (int) (Math.random() * 15);
+				temp = matrix[i];
+				matrix[i] = matrix[random];
+				matrix[random] = temp;
+			}
+
+			for(int i = 0; i < matrix.length; i++) {
+				temp = matrix[i];
+				for(int n = temp + 1; n < matrix.length; n++) {
+					if(matrix[n] < matrix[i]) {
+						paritySum++;
+					}
+				}
+			}
+			parity = paritySum == 0 ? true : paritySum % 2 == 0;
+		}
+		temp = 0;
+		for(int i = 0; i < intrMatrix.length; i++) {
+			for(int n = 0; n < intrMatrix[i].length; n++) {
+				intrMatrix[i][n] = matrix[temp];
+				if(temp < 14) {
+					temp++;
+				}
+			}
+		}
+		intrMatrix[3][3] = 0;
+		return intrMatrix;
+	}
+
 	static void game(int[] pos, int[][] solvedmatrix, int[][] unsolvedmatrix)
 	throws java.io.IOException {
 		int number;
@@ -97,12 +138,7 @@ public class Fifteen {
 			{9, 10, 11, 12},
 			{13, 14, 15, 0}
 		};
-		int intricateMatrix[][] = { //Matrix where almost all squares on wrong places
-			{1, 2, 3, 4},
-			{5, 6, 7, 8},
-			{9, 10, 11, 0},
-			{13, 14, 15, 12}
-		};
+		int intricateMatrix[][] = generateMatrix();  //Matrix where almost all squares on wrong places
 		int zero[] = findNumber(intricateMatrix, 0); //Position of empty square (1/16)
 		int positions[] = possibleSteps(intricateMatrix, zero);
 
