@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 public class Fifteen {
-	//Method gets intricateMatrix and return position of number's place
+	//Method gets intricateMatrix and return position of number's place 
 	static int[] findNumber(int[][] m, int num) {
 		int[] result = new int[2];
 		for(int i = 0; i < m.length; i++) {
@@ -41,15 +41,23 @@ public class Fifteen {
 	}
 
 	static void printMatrix(int[][] matrix) {
+		System.out.println("+-------------------+");
 		for(int i = 0; i < matrix.length; i++) {
+			System.out.print("| ");
 			for(int n = 0; n < matrix[i].length; n++) {
-				System.out.print(((matrix[i][n] < 10) ? "0" : "") + matrix[i][n] + " ");
+				if(matrix[i][n] == 0) {
+					System.out.print("   | ");
+				} else {
+					System.out.print(((matrix[i][n] < 10) ? "0" : "") + matrix[i][n] + " | ");
+				}
+
 			}
-			System.out.println();
+			System.out.println("");
+			System.out.println("+-------------------+");
 		}
 	}
 
-	static int[][] generateMatrix() {
+	static int[][] generateMatrix() { //This method generate 4x4 matrix and solve 15 pazzle probleb (only one half pazzles could be solved)
 		int matrix[] = new int[15];
 		int intrMatrix[][] = new int[4][4];
 		int temp = 0, paritySum;
