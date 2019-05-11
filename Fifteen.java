@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 public class Fifteen {
-	//Method gets intricateMatrix and return position of number's place 
+	//Method gets intricateMatrix and return position of number's place
 	static int[] findNumber(int[][] m, int num) {
 		int[] result = new int[2];
 		for(int i = 0; i < m.length; i++) {
@@ -100,29 +100,29 @@ public class Fifteen {
 
 	static void game(int[] pos, int[][] solvedmatrix, int[][] unsolvedmatrix)
 	throws java.io.IOException {
-		int number;
+		int number, steps = 0;
 		boolean include = false;
 		int[][] solved = solvedmatrix, unsolved = unsolvedmatrix;
-		int[] zero, chosenNumber;
+		int[] zero, chosenNumber, possibleSteps = pos;
 		Scanner in = new Scanner(System.in);
 		while(!Arrays.deepEquals(solved, unsolved)) {
 			do {
 				do {
 					printMatrix(unsolved);
-					System.out.print("Enter number you'd like to move ");
+					System.out.print("You have already moved " + steps + " piles." + "\nEnter number you'd like to move ");
 					while(!in.hasNextInt()) {
 						System.out.print("it's not a number, enter ");
-						for(int i = 0; i < pos.length; i++) {
-							if (pos[i] >= 0)
-								System.out.print(pos[i] + " ");
+						for(int i = 0; i < possibleSteps.length; i++) {
+							if (possibleSteps[i] >= 0)
+								System.out.print(possibleSteps[i] + " ");
 						}
 						in.next();
 					}
 					System.out.println();
 				} while(!in.hasNextInt()); //here I'll should add numbers from possible steps
 				number = in.nextInt();
-				for(int i = 0; i < pos.length; i++) {
-					if (number == pos[i] && number > 0) {
+				for(int i = 0; i < possibleSteps.length; i++) {
+					if (number == possibleSteps[i] && number > 0) {
 						include = true;
 						break;
 					}
@@ -133,6 +133,9 @@ public class Fifteen {
 			chosenNumber = findNumber(unsolved, number);
 			unsolved[zero[0]][zero[1]] = number;
 			unsolved[chosenNumber[0]][chosenNumber[1]] = 0;
+			possibleSteps = possibleSteps(unsolved, findNumber(unsolved, 0));
+			steps++;
+			include = false;
 		}
 		in.close();
 		System.out.println("Yo, yo, yo, you have won this game");
