@@ -1,5 +1,4 @@
-Hello, it's me, I'm Andrew T. and I'm trying to develop fifteen game
+It's my first attempt to create Fifteen puzzle on Java
+When I started write first lines I didn't know anything about Java programming (now as well)
 
-I'm so lazy so I don't know at all how it call in English, but it Russian it called "Пятнашки"
-
-You have matrix 4x4 poles from 1 to 15 and one empty pile. By switching empty pile with neighbor pile you should rearrange piles from 1 to 15 in minimal steps
+See you
